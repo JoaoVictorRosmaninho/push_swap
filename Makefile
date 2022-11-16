@@ -3,7 +3,8 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g -c
 LIB =  -L./lib -lft 
 HEADER = libft/libft.h
-TARGETS = push_swap.c 
+TARGETS = push_swap.c \
+					instructions/sa.c
 OBJ_DIR = obj
 SRC     = $(addprefix ./src/,$(TARGETS))
 OBJ     = $(addprefix ./$(OBJ_DIR)/,$(TARGETS:.c=.o))

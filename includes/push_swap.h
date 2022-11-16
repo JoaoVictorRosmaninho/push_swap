@@ -10,4 +10,6 @@ typedef struct {
   t_list *instructions;
 } s_ctx;
 
+
+void sa(s_ctx *context);
 #endif

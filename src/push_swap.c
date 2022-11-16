@@ -31,16 +31,26 @@ void init_context(s_ctx *context) {
   context->instructions =  (t_list *) ft_calloc(1, sizeof(t_list));
 } 
 
+void display(s_ctx *context) {
+  for (t_node *aux = context->stack_a->head ; aux != NULL; aux = aux->next) {
+    ft_printf("%d ", *(int *) aux->content);
+  }
+  ft_putchar_fd('\n', 1);
+}
+
 
 int main(int argc, char *argv[]) {
   s_ctx context; 
 
   init_context(&context);
-  init_stack(context.stack_a, argc, argv);
 
-  for (t_node *aux = context.stack_a->head ; aux != NULL; aux = aux->next) {
-    ft_printf("%d\n", *(int *) aux->content);
-  }
+  init_stack(context.stack_a, argc, argv);
+  
+  display(&context);
+
+  sa(&context);
+
+  display(&context);
 
   ft_printf("size: %d\n", context.stack_a->size);
 
