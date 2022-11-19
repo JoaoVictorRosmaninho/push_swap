@@ -89,7 +89,9 @@ void test_pb(void) {
 
 void test_ra(void) {
   t_list list;
+  t_list instructions;
   ft_memset(&list, 0, sizeof(list));
+  ft_memset(&instructions, 0, sizeof(list));
 
   int *a = ft_calloc(1, sizeof(int));
   int *b = ft_calloc(1, sizeof(int));
@@ -105,22 +107,52 @@ void test_ra(void) {
   ft_lstadd_back(&list, node_b);
   ft_lstadd_back(&list, node_c);
 
-  s_ctx context; 
-
-  context.stack_a = &list;
-  ra(&context);
-  assert( list.tail == node_a, "pr");
-  assert( list.head == node_c, "pr");
-  ra(&context);
-  assert( list.tail == node_c, "pr");
-  assert( list.head == node_a, "pr");
+  ra(&list, &instructions);
+  assert( list.tail == node_a, "ra");
+  assert( list.head == node_c, "ra");
+  ra(&list, &instructions);
+  assert( list.tail == node_c, "ra");
+  assert( list.head == node_a, "ra");
 
   ft_lstclear(&list, NULL);
+  ft_lstclear(&instructions, NULL);
+}
+
+void test_rb(void) {
+  t_list list;
+  t_list instructions;
+  ft_memset(&list, 0, sizeof(list));
+  ft_memset(&instructions, 0, sizeof(list));
+
+  int *a = ft_calloc(1, sizeof(int));
+  int *b = ft_calloc(1, sizeof(int));
+  int *c = ft_calloc(1, sizeof(int));
+
+  *a = 1; *b = 2; *c = 3;
+
+  t_node *node_a = ft_lstnew(a);
+  t_node *node_b = ft_lstnew(b);
+  t_node *node_c = ft_lstnew(c);
+
+  ft_lstadd_back(&list, node_a);
+  ft_lstadd_back(&list, node_b);
+  ft_lstadd_back(&list, node_c);
+
+  rb(&list, &instructions);
+  assert( list.tail == node_a, "rb");
+  assert( list.head == node_c, "rb");
+  rb(&list, &instructions);
+  assert( list.tail == node_c, "rb");
+  assert( list.head == node_a, "rb");
+
+  ft_lstclear(&list, NULL);
+  ft_lstclear(&instructions, NULL);
 }
 
 int main(void) {
   test_pa();
   test_pb();
   test_ra();
+  test_rb();
   
 }

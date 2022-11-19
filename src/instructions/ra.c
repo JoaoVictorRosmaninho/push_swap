@@ -2,26 +2,28 @@
 
 
 /* c is the context strucuture  */
-int ra(s_ctx *c) {
+int ra(t_list *stack, t_list *instructions) {
   t_node *node;
 
-  if (!c || !c->stack_a)
+  if (!stack)
     return (-1);
   /* penultimo aponta pro novo ultimo  */
-  c->stack_a->tail->prev->next = c->stack_a->head;
+  stack->tail->prev->next = stack->head;
   /* ultimo tem seu prev ajustado   */
-  c->stack_a->head->prev = c->stack_a->tail->prev;
+  stack->head->prev = stack->tail->prev;
   /* primeiro tem seu next ajustado pro segundo   */
-  c->stack_a->tail->next = c->stack_a->head->next;
+  stack->tail->next = stack->head->next;
   /*  ultimo tem seu proximo apontado pra NULL */
-  c->stack_a->head->next = NULL;
+  stack->head->next = NULL;
   /*  primeiro tem o prev ajustado pra NULL */
-  c->stack_a->tail->prev = NULL;
+  stack->tail->prev = NULL;
 
   /*  swap  */
-  node = c->stack_a->head; 
-  c->stack_a->head = c->stack_a->tail; 
-  c->stack_a->tail = node;
+  node = stack->head; 
+  stack->head = stack->tail; 
+  stack->tail = node;
 
+  if (instructions)  
+    ft_lstadd_back(instructions, ft_lstnew(ft_strdup("ra")));
   return(0);
 }

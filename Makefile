@@ -9,7 +9,8 @@ TARGETS = push_swap.c \
 					instructions/ss.c \
 					instructions/pa.c \
 					instructions/pb.c \
-					instructions/ra.c
+					instructions/ra.c \
+					instructions/rb.c
 
 OBJ_DIR = obj
 SRC     = $(addprefix ./src/,$(TARGETS))
@@ -18,13 +19,7 @@ LIBFT   = libft.a
 VALGRIND_FLAGS = valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose
 NAME = push_swap 
 
-TEST_TARGET = tst/test.c \
-					instructions/sa.c \
-					instructions/sb.c \
-					instructions/ss.c \
-					instructions/pa.c \
-					instructions/pb.c \
-					instructions/ra.c 
+TEST_TARGET = $(TARGETS:push_swap.c=tst/test.c)
 
 NAME_TEST = test 
 SRC_TEST  = $(addprefix ./src/,$(TEST_TARGET))

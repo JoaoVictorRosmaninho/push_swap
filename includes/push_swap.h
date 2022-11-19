@@ -16,5 +16,6 @@ void sb(s_ctx *context);
 void ss(s_ctx *context);
 int pa(s_ctx *context);
 int pb(s_ctx *context);
-int ra(s_ctx *context);
+int ra(t_list *stack, t_list *instructions);
+int rb(t_list *stack, t_list *instructions);
 #endif
