@@ -39,6 +39,13 @@ void display(s_ctx *context) {
 }
 
 
+void display_reverse(s_ctx *context) {
+  for (t_node *aux = context->stack_a->tail ; aux != NULL; aux = aux->prev) {
+    ft_printf("%d ", *(int *) aux->content);
+  }
+  ft_putchar_fd('\n', 1);
+}
+
 int main(int argc, char *argv[]) {
   s_ctx context; 
 
@@ -53,6 +60,11 @@ int main(int argc, char *argv[]) {
   display(&context);
 
   ft_printf("size: %d\n", context.stack_a->size);
+
+  ft_printf("printando ao contrario:\n");
+  
+  display_reverse(&context);
+
 
   clear_context(&context);
 }

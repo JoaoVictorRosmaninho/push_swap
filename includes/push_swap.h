@@ -12,4 +12,9 @@ typedef struct {
 
 
 void sa(s_ctx *context);
+void sb(s_ctx *context);
+void ss(s_ctx *context);
+int pa(s_ctx *context);
+int pb(s_ctx *context);
+int ra(s_ctx *context);
 #endif
