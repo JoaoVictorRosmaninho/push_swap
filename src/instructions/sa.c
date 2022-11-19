@@ -1,14 +1,14 @@
 #include "../../includes/push_swap.h"
 
-void sa(s_ctx *context) {
+int sa(t_list *s1, t_list *instructions) {
   t_node *node_a;
   t_node *node_b;
   t_node *node_c;
 
-  if (!context->stack_a->head)
-    return ;
+  if (!s1 || !s1->head || (s1->size == 1))
+    return (0);
 
-  node_a = context->stack_a->head; // primeiro
+  node_a = s1->head; // primeiro
   node_b = node_a->next;   //segundo
   node_c = node_b->next;  //terceiro 
                         
@@ -19,5 +19,9 @@ void sa(s_ctx *context) {
   node_b->next = node_a; 
   
   node_b->prev = NULL;
-  context->stack_a->head = node_b; // novo primeiro
+  s1->head = node_b; // novo primeiro
+  
+  if (instructions)
+    ft_lstadd_back(instructions, ft_lstnew(ft_strdup("sa")));
+  return(1);
 }

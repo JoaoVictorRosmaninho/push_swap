@@ -1,23 +1,10 @@
 #include "../../includes/push_swap.h"
 
-void sb(s_ctx *context) {
-  t_node *node_a;
-  t_node *node_b;
-  t_node *node_c;
+int sb(t_list *s1, t_list *instructions) {
+  if (!s1 || !s1->head || (s1->size == 1))
+    return (0);
 
-  if (!context->stack_b->head)
-    return ;
-
-  node_a = context->stack_b->head; 
-  node_b = node_a->next;  
-  node_c = node_b->next; 
-                        
-  node_c->prev = node_a; 
-  node_a->next = node_c; 
-
-  node_a->prev = node_b;
-  node_b->next = node_a; 
-  
-  node_b->prev = NULL;
-  context->stack_b->head = node_b; 
+  if (instructions)
+    ft_lstadd_back(instructions, ft_lstnew(ft_strdup("sb")));
+  return (sa(s1, NULL));
 }
