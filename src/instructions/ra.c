@@ -4,8 +4,8 @@
 /* c is the context strucuture  */
 int ra(t_list *stack, t_list *instructions) {
 
-  if (!stack)
-    return (-1);
+  if (!stack->head)
+    return (0);
 
   stack->tail->next = stack->head;
   stack->head->prev = stack->tail;
@@ -16,5 +16,5 @@ int ra(t_list *stack, t_list *instructions) {
 
   if (instructions)  
     ft_lstadd_back(instructions, ft_lstnew(ft_strdup("ra")));
-  return(0);
+  return(1);
 }

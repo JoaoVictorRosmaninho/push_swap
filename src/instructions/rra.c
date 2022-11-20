@@ -2,7 +2,7 @@
 
 
 int rra(t_list *stack, t_list *instructions) {
-  if ( !stack )
+  if ( !stack || !stack->head )
     return (0);
   
   t_node *node;
@@ -15,6 +15,6 @@ int rra(t_list *stack, t_list *instructions) {
   stack->head = stack->tail;
   stack->tail = node;
   if (instructions)
-    ft_lstadd_back(stack, ft_lstnew(ft_strdup("rra")));
-  return (0);
+    ft_lstadd_back(instructions, ft_lstnew(ft_strdup("rra")));
+  return (1);
 }

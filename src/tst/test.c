@@ -144,33 +144,51 @@ void test_rb(void) {
   t_node *node_a = ft_lstnew(a);
   t_node *node_b = ft_lstnew(b);
   t_node *node_c = ft_lstnew(c);
+  
+  assert( rb(&list, &instructions) == 0, "rb: não deve fazer nada");
+  assert( instructions.size == 0, "rb: não adicionar nenhuma instrução");
 
   ft_lstadd_back(&list, node_a);
   ft_lstadd_back(&list, node_b);
   ft_lstadd_back(&list, node_c);
 
   rb(&list, &instructions);
-  assert( list.tail == node_a, "rb");
-  assert( list.head == node_b, "rb");
+  assert( list.tail == node_a, "rb: tail deve ser igual ao node_a");
+  assert( list.head == node_b, "rb: head deve ser igual ao node_b");
   rb(&list, &instructions);
-  assert( list.tail == node_b, "rb");
-  assert( list.head == node_c, "rb");
+  assert( list.tail == node_b, "rb: tail deve ser igual ao node_b");
+  assert( list.head == node_c, "rb: head deve ser igual ao node_c");
+  rb(&list, &instructions);
+  assert( list.tail == node_c, "rb: tail deve ser igual ao node_c");
+  assert( list.head == node_a, "rb: head deve ser igual ao node_a");
+  assert( instructions.size == 3, "rb: não ter 3 intruções");
 
   ft_lstclear(&list, NULL);
   ft_lstclear(&instructions, NULL);
 }
 
+void display(t_list *list) {
+  for (t_node *node = list->head; node != NULL; node = node->next) {
+    ft_printf("%d ", *(int *) node->content);
+  }
+  ft_putchar_fd('\n', 1);
+}
+
+
 void test_rra(void) {
   t_list list;
   t_list instructions;
-  ft_memset(&list, 0, sizeof(list));
-  ft_memset(&instructions, 0, sizeof(list));
+  ft_memset(&list, 0, sizeof(t_list));
+  ft_memset(&instructions, 0, sizeof(t_list));
 
   int *a = ft_calloc(1, sizeof(int));
   int *b = ft_calloc(1, sizeof(int));
   int *c = ft_calloc(1, sizeof(int));
 
   *a = 1; *b = 2; *c = 3;
+  
+  assert( rb(&list, &instructions) == 0, "rra: não deve fazer nada");
+  assert( instructions.size == 0, "rra: não adicionar nenhuma instrução");
 
   t_node *node_a = ft_lstnew(a);
   t_node *node_b = ft_lstnew(b);
@@ -181,22 +199,103 @@ void test_rra(void) {
   ft_lstadd_back(&list, node_c);
 
   rra(&list, &instructions);
-  assert( list.tail == node_b, "rra");
-  assert( list.head == node_c, "rra");
+  assert( list.tail == node_b, "rra: ultimo elemento deve ser o node_b");
+  assert( list.head == node_c, "rra: primeiro elemento deve ser  o node_c");
   rra(&list, &instructions);
-  assert( list.tail == node_a, "rra");
-  assert( list.head == node_b, "rra");
+  assert( list.tail == node_a, "rra: ultimo elemento deve ser  o node_a");
+  assert( list.head == node_b, "rra: primeiro elemento deve ser o node_b");
+  rra(&list, &instructions);
+  assert( list.tail == node_c, "rra: ultimo elemento deve ser  o node_c");
+  assert( list.head == node_a, "rra: primeiro elemento deve ser o node_a");
+  assert( instructions.size == 3, "rra: instructions deve ter tamanho igual a 3");
 
   ft_lstclear(&list, NULL);
   ft_lstclear(&instructions, NULL);
 }
 
+
+void test_sa(void) {
+  t_list list;
+  t_list instructions;
+  ft_memset(&list, 0, sizeof(list));
+  ft_memset(&instructions, 0, sizeof(list));
+
+  int *a = ft_calloc(1, sizeof(int));
+  int *b = ft_calloc(1, sizeof(int));
+  int *c = ft_calloc(1, sizeof(int));
+
+  *a = 1; *b = 2; *c = 3;
+  
+  assert(sa(&list, &instructions) == 0, "sa: quando nao há nenhum elemento nao se deve fazer nada");
+
+  t_node *node_a = ft_lstnew(a);
+  t_node *node_b = ft_lstnew(b);
+  t_node *node_c = ft_lstnew(c);
+
+  ft_lstadd_back(&list, node_a);
+  assert(sa(&list, &instructions) == 0, "sa: quando se têm um elemento nao se deve fazer nada");
+  ft_lstadd_back(&list, node_b);
+  ft_lstadd_back(&list, node_c);
+  
+  assert(list.size == 3, "sa: size deve ser igual a 3");
+  sa(&list, &instructions);
+  assert(list.head == node_b, "sa: head deve ser igual ao ultimo item");
+  sa(&list, &instructions);
+  assert(list.head == node_a, "sa: head deve ser igual ao primeiro item");
+  assert(instructions.size == 2, "pb: instructions deve ter o tamanho igual a 2");
+  
+
+  ft_lstclear(&list, NULL);
+  ft_lstclear(&instructions, NULL);
+
+}
+
+void test_sb(void) {
+  t_list list;
+  t_list instructions;
+  ft_memset(&list, 0, sizeof(list));
+  ft_memset(&instructions, 0, sizeof(list));
+
+  int *a = ft_calloc(1, sizeof(int));
+  int *b = ft_calloc(1, sizeof(int));
+  int *c = ft_calloc(1, sizeof(int));
+
+  *a = 1; *b = 2; *c = 3;
+  
+  assert(sb(&list, &instructions) == 0, "sb: quando nao há nenhum elemento nao se deve fazer nada");
+
+  t_node *node_a = ft_lstnew(a);
+  t_node *node_b = ft_lstnew(b);
+  t_node *node_c = ft_lstnew(c);
+
+  ft_lstadd_back(&list, node_a);
+  assert(sb(&list, &instructions) == 0, "sb: quando se têm um elemento nao se deve fazer nada");
+  ft_lstadd_back(&list, node_b);
+  ft_lstadd_back(&list, node_c);
+  
+  assert(list.size == 3, "sb: size deve ser igual a 3");
+  sb(&list, &instructions);
+  assert(list.head == node_b, "sb: head deve ser igual ao ultimo item");
+  sb(&list, &instructions);
+  assert(list.head == node_a, "sb: head deve ser igual ao primeiro item");
+  assert(instructions.size == 2, "pb: instructions deve ter o tamanho igual a 2");
+
+  ft_lstclear(&list, NULL);
+  ft_lstclear(&instructions, NULL);
+
+}
 int main(void) {
   test_pa();
   ft_printf("\n\n");
   test_pb();
+  ft_printf("\n\n");
+  test_sa();
+  ft_printf("\n\n");
+  test_sb();
  // test_ra();
- // test_rb();
- // test_rra();
+  ft_printf("\n\n");
+  test_rb();
+  ft_printf("\n\n");
+  test_rra();
   
 }

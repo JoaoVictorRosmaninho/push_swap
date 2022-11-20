@@ -1,13 +1,13 @@
 #include "../../includes/push_swap.h"
 
 
-int rrb(t_list *stack, t_list *instructions) {
+int rrb(t_list *s1, t_list *instructions) {
   t_node *node;
 
-  if ( !stack )
-    return (-1);
-  
-  if (instructions)
-    ft_lstadd_back(stack, ft_lstnew(ft_strdup("rrb")));
-  return (rra(stack, NULL));
+  if (rra(s1, NULL)) {
+    if (instructions)
+      ft_lstadd_back(instructions, ft_lstnew(ft_strdup("rrb")));
+    return (1);
+  }
+  return (0);
 }
