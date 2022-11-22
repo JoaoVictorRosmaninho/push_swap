@@ -1,70 +1,87 @@
 #include "../includes/push_swap.h"
-
-static void clear_context(s_ctx *context) {
-  ft_lstclear(context->stack_a, NULL);
-  ft_lstclear(context->stack_b, NULL);
-  ft_lstclear(context->instructions, NULL);
+#include <stdio.h>
 
 
-  free(context->stack_a);
-  free(context->stack_b);
-  free(context->instructions);
-}
+static void init_stack(t_list *stack, char **input) {
+  int  *ptr_i, i;
 
-static void init_stack(t_list *stack, int argc, char *argv[]) {
-  int *ptr_i;
-  int  i;
-
-  ptr_i = NULL; 
-  i = 1;
-  while (i < argc) {
+  ptr_i = NULL;
+  i = 0;
+  while (input[i]) { 
     ptr_i = (int *) ft_calloc(1, sizeof(int));
-    *ptr_i = ft_atoi(argv[i]);
+    *ptr_i = ft_atoi(input[i]);
     ft_lstadd_front(stack, ft_lstnew(ptr_i));
     i++;
   }
 }
 
-void init_context(s_ctx *context) {
-  context->stack_a      =  (t_list *) ft_calloc(1, sizeof(t_list));
-  context->stack_b      =  (t_list *) ft_calloc(1, sizeof(t_list));
-  context->instructions =  (t_list *) ft_calloc(1, sizeof(t_list));
-} 
 
-void display(s_ctx *context) {
-  for (t_node *aux = context->stack_a->head ; aux != NULL; aux = aux->next) {
-    ft_printf("%d ", *(int *) aux->content);
+void display(t_list *s1, t_list *s2) {
+  t_node *A, *B;
+
+  A = s1->head;
+  B = s2->head;
+
+  ft_printf("A B\n");
+
+  while (A || B) {
+    if (A) {
+      ft_printf("%d ", *(int *) A->content);
+      A = A->next;
+    }
+    if (B) {
+      ft_printf("%d", *(int *) B->content);
+      B = B->next;
+    }
+    ft_putchar_fd('\n', 1);
   }
-  ft_putchar_fd('\n', 1);
+}
+
+void clear(char **input) {
+  int i = 0;
+
+  while (input[i]) {
+    free(input[i]);
+    i++;
+  }
+  free(input);
 }
 
 
-void display_reverse(s_ctx *context) {
-  for (t_node *aux = context->stack_a->tail ; aux != NULL; aux = aux->prev) {
-    ft_printf("%d ", *(int *) aux->content);
-  }
-  ft_putchar_fd('\n', 1);
-}
 
 int main(int argc, char *argv[]) {
-  s_ctx context; 
+  if (argc < 2)
+    exit(0);
 
-  init_context(&context);
+  t_list stack_a;
+  t_list stack_b;
+  t_list instructions; 
+  char **input = NULL;
+  int op = 0;
 
-  init_stack(context.stack_a, argc, argv);
+  input = ft_split(argv[1], ' ');
+
+  ft_memset(&stack_a, 0, sizeof(t_list));
+  ft_memset(&stack_b, 0, sizeof(t_list));
+  ft_memset(&instructions, 0, sizeof(t_list));
+
+  init_stack(&stack_a, input);
+
+
+  while (op != -1) {
+      display(&stack_a, &stack_b);
+      scanf("%d", &op);
+      switch(op) {
+        case 1:
+          sa(&stack_a, &instructions);
+        break;
+        case 2:
+          sa(&stack_b, &instructions);
+        break;
+        case 3:
   
-  display(&context);
-
-  sa(&context);
-
-  display(&context);
-
-  ft_printf("size: %d\n", context.stack_a->size);
-
-  ft_printf("printando ao contrario:\n");
-  
-  display_reverse(&context);
-
-
-  clear_context(&context);
+  clear(input);
+  ft_lstclear(&stack_a, NULL);
+  ft_lstclear(&stack_b, NULL);
+  ft_lstclear(&instructions, NULL);
 }

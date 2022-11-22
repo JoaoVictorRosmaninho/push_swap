@@ -19,5 +19,6 @@ int pb(t_list *s1, t_list *s2, t_list *instructions);
 int ra(t_list *s1, t_list *instructions);
 int rb(t_list *s1, t_list *instructions);
 int rra(t_list *s1, t_list *instructions);
+int rrb(t_list *s1, t_list *instructions);
 int rrr(t_list *s1, t_list *s2, t_list *instructions);
 #endif

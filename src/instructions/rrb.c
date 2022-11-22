@@ -2,7 +2,6 @@
 
 
 int rrb(t_list *s1, t_list *instructions) {
-  t_node *node;
 
   if (rra(s1, NULL)) {
     if (instructions)

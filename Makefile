@@ -11,7 +11,9 @@ TARGETS = push_swap.c \
 					instructions/pb.c \
 					instructions/ra.c \
 					instructions/rb.c \
-					instructions/rra.c
+					instructions/rra.c \
+					instructions/rrr.c \
+					instructions/rrb.c
 
 OBJ_DIR = obj
 SRC     = $(addprefix ./src/,$(TARGETS))
