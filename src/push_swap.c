@@ -2,14 +2,15 @@
 #include <stdio.h>
 
 
-static void init_stack(t_list *stack, char **input) {
-  int  *ptr_i, i;
+static void init_stack(t_list *stack, char **argv, int argc) {
+  int  i;
+  int *ptr_i;
 
-  ptr_i = NULL;
   i = 0;
-  while (input[i]) { 
+  ptr_i = NULL;
+  while (i < argc) { 
     ptr_i = (int *) ft_calloc(1, sizeof(int));
-    *ptr_i = ft_atoi(input[i]);
+    *ptr_i = ft_atoi(argv[i]);
     ft_lstadd_front(stack, ft_lstnew(ptr_i));
     i++;
   }
@@ -49,6 +50,20 @@ void clear(char **input) {
 
 
 
+void order(t_list *stack_a, t_list *stack_b, t_list *instructions) {
+  (void)stack_b;
+  if (stack_a->size == 3) {
+    order_three(stack_a, instructions);
+  } else if (stack_a->size == 4) {
+    order_four(stack_a, stack_b, instructions);
+  } else if (stack_a->size == 5) {
+    order_five(stack_a, stack_b, instructions);
+  } else {  
+    merge_sort(stack_a, stack_b, instructions);
+  }
+}
+
+
 int main(int argc, char *argv[]) {
   if (argc < 2)
     exit(0);
@@ -56,31 +71,19 @@ int main(int argc, char *argv[]) {
   t_list stack_a;
   t_list stack_b;
   t_list instructions; 
-  char **input = NULL;
-  int op = 0;
-
-  input = ft_split(argv[1], ' ');
 
   ft_memset(&stack_a, 0, sizeof(t_list));
   ft_memset(&stack_b, 0, sizeof(t_list));
   ft_memset(&instructions, 0, sizeof(t_list));
 
-  init_stack(&stack_a, input);
-
-
-  while (op != -1) {
-      display(&stack_a, &stack_b);
-      scanf("%d", &op);
-      switch(op) {
-        case 1:
-          sa(&stack_a, &instructions);
-        break;
-        case 2:
-          sa(&stack_b, &instructions);
-        break;
-        case 3:
+  init_stack(&stack_a, argv, argc);
   
-  clear(input);
+  order(&stack_a, &stack_b, &instructions);
+
+  for (t_node *tmp = instructions.head; tmp; tmp = tmp->next) {
+    ft_printf("%s\n", (char *) tmp->content);
+  }
+
   ft_lstclear(&stack_a, NULL);
   ft_lstclear(&stack_b, NULL);
   ft_lstclear(&instructions, NULL);

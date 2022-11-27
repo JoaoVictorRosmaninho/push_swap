@@ -21,4 +21,9 @@ int rb(t_list *s1, t_list *instructions);
 int rra(t_list *s1, t_list *instructions);
 int rrb(t_list *s1, t_list *instructions);
 int rrr(t_list *s1, t_list *s2, t_list *instructions);
+void order_three(t_list *s1, t_list *instructions);
+void order_four(t_list *s1, t_list *s2, t_list *instructions);
+void order_five(t_list *s1, t_list *s2, t_list *instructions);
+void merge_sort(t_list *s1, t_list *s2, t_list *instructions);
+
 #endif

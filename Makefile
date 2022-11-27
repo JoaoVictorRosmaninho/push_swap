@@ -13,7 +13,8 @@ TARGETS = push_swap.c \
 					instructions/rb.c \
 					instructions/rra.c \
 					instructions/rrr.c \
-					instructions/rrb.c
+					instructions/rrb.c \
+					utils/sort.c
 
 OBJ_DIR = obj
 SRC     = $(addprefix ./src/,$(TARGETS))
@@ -52,6 +53,7 @@ $(OBJ_DIR):
 	mkdir obj/ 
 	mkdir obj/instructions/
 	mkdir obj/tst
+	mkdir obj/sort
 
 clean:
 	rm -rf $(OBJ)
